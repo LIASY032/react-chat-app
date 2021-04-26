@@ -4,19 +4,20 @@ const PREFIX = 'whatsapp-clone-';
 
 function useLocalStorage(key, initialValue) {
     const prefixedKey = PREFIX + key;
-    console.log(prefixedKey);
+   
     const [value, setValue] = useState(function () {
-        console.log(prefixedKey);
+        
         const jsonValue = localStorage.getItem(prefixedKey);
        
-        try {
-            return JSON.parse(jsonValue);
-        } catch (e) {
-            console.log("empty json");
-        }
-        // if (jsonValue != null && jsonValue !== undefined) {
+        // try {
         //     return JSON.parse(jsonValue);
+        // } catch (e) {
+        //     console.log("empty json");
         // }
+        
+        if (jsonValue != null && jsonValue !== "undefined") {
+            return JSON.parse(jsonValue);
+        }
         if (typeof initialValue === 'function') {
             return initialValue();
         } else {
