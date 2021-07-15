@@ -13,9 +13,8 @@ export function ContactsProvider({ children }) {
 
   function createContact(id, name) {
       setContacts(prevContacts => {
-        console.log(id +" : " + name);
-      return [...prevContacts, { id, name }]
-    })
+        return [...prevContacts, { id, name }];
+      });
   }
 
   return (
