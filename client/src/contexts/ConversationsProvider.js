@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useContacts } from "./ContactsProvider";
-// import { useSocket } from "./SocketProvider";
+import { useSocket } from "./SocketProvider";
 
 const ConversationsContext = React.createContext();
 
@@ -51,19 +51,19 @@ export function ConversationsProvider({ id, children }) {
     [setConversations]
   );
 
-  // useEffect(() => {
-  //   if (socket == null) return;
+  useEffect(() => {
+    if (socket == null) return;
 
-  //   socket.on("receive-message", addMessageToConversation);
+    socket.on("receive-message", addMessageToConversation);
 
-  //   return () => socket.off("receive-message");
-  // }, [socket, addMessageToConversation]);
+    return () => socket.off("receive-message");
+  }, [socket, addMessageToConversation]);
 
-  // function sendMessage(recipients, text) {
-  //   socket.emit("send-message", { recipients, text });
+  function sendMessage(recipients, text) {
+    socket.emit("send-message", { recipients, text });
 
-  //   addMessageToConversation({ recipients, text, sender: id });
-  // }
+    addMessageToConversation({ recipients, text, sender: id });
+  }
 
   const formattedConversations = conversations.map((conversation, index) => {
     const recipients = conversation.recipients.map((recipient) => {
