@@ -16,7 +16,7 @@ export function ConversationsProvider({ id, children }) {
   );
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
   const { contacts } = useContacts();
-  // const socket = useSocket();
+  const socket = useSocket();
 
   function createConversation(recipients) {
     setConversations((prevConversations) => {
