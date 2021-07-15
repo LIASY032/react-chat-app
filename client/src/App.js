@@ -1,20 +1,25 @@
-import React, { useState } from "react";
-import Dashboard from "./components/Dashboard";
-import { ConversationsProvider } from "./contexts/ConversationsProvider";
+import React from "react";
 import Login from "./components/Login";
-import { ContactsProvider } from "./contexts/ContactsProvider";
 import useLocalStorage from "./hooks/useLocalStorage";
+import Dashboard from "./components/Dashboard";
+import { ContactsProvider } from "./contexts/ContactsProvider";
+import { ConversationsProvider } from "./contexts/ConversationsProvider";
+import { SocketProvider } from "./contexts/SocketProvider";
 
 function App() {
   const [id, setId] = useLocalStorage("id");
+
   const dashboard = (
-    <ContactsProvider>
-      <ConversationsProvider id={id}>
-        <Dashboard id={id} />
-      </ConversationsProvider>
-    </ContactsProvider>
+    <SocketProvider id={id}>
+      <ContactsProvider>
+        <ConversationsProvider id={id}>
+          <Dashboard id={id} />
+        </ConversationsProvider>
+      </ContactsProvider>
+    </SocketProvider>
   );
-  return <div>{id ? dashboard : <Login onIdSubmit={setId}></Login>}</div>;
+
+  return id ? dashboard : <Login onIdSubmit={setId} />;
 }
 
 export default App;
